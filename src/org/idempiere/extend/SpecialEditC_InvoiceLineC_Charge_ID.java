@@ -13,45 +13,76 @@
  *****************************************************************************/
 package org.idempiere.extend;
 
+import org.adempiere.webui.apps.AEnv;
+import org.adempiere.webui.window.FDialog;
 import org.compiere.model.GridField;
 import org.compiere.model.GridTab;
+import org.compiere.model.MFactAcct;
+import org.compiere.model.MInvoice;
 import org.compiere.model.PO;
+import org.compiere.model.X_C_InvoiceLine;
+import org.compiere.util.Env;
 import org.idempiere.base.ISpecialEditCallout;
 
 /**
- * @author Carlos Ruiz
+ * @author Nicolas Micoud
  *
  */
-public class SpecialEditC_OrderC_Project_ID implements ISpecialEditCallout {
+public class SpecialEditC_InvoiceLineC_Charge_ID implements ISpecialEditCallout {
 
 	@Override
 	public boolean canEdit(GridTab mTab, GridField mField, PO po) {
 		// TODO Auto-generated method stub
+		System.out.println("canEdit " + mTab + " - " + mField + " - "+ po);
 		return true;
 	}
 
 	@Override
 	public String validateEdit(GridTab mTab, GridField mField, PO po) {
 		// TODO Auto-generated method stub
+		System.out.println("validateEdit " + mTab + " - " + mField + " - "+ po);
 		return null;
 	}
 
 	@Override
 	public boolean preEdit(GridTab mTab, GridField mField, PO po) {
-		// TODO Auto-generated method stub
-		return false;
+		System.out.println("preEdit " + mTab + " - " + mField + " - "+ po);
+
+		// Delete Accounting of current invoice
+		MFactAcct.deleteEx (MInvoice.Table_ID, (Integer) mTab.getValue("C_Invoice_ID"), null);
+		MInvoice invoice = new MInvoice(Env.getCtx(), (Integer) mTab.getValue("C_Invoice_ID"), null);
+		invoice.setPosted(false);
+		invoice.saveEx();
+
+		return true;
 	}
 
 	@Override
 	public boolean updateEdit(GridTab mTab, GridField mField, PO po, Object newValue) {
-		// TODO Auto-generated method stub
-		return false;
+
+		//		po.set_ValueOfColumn("C_Charge_ID", newValue);
+		//		po.saveEx(); it can't be done using PO as you can't save a MInvoiceLine when its parent is processed
+
+		X_C_InvoiceLine il = new X_C_InvoiceLine(Env.getCtx(), mTab.getRecord_ID(), null);
+		il.setC_Charge_ID((Integer) newValue);
+		il.saveEx();
+
+		return true;
 	}
 
 	@Override
 	public boolean postEdit(GridTab mTab, GridField mField, PO po) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		System.out.println("postEdit " + mTab + " - " + mField + " - "+ po);
 
+		// Repost invoice
+		String error = AEnv.postImmediate (mTab.getWindowNo(), po.getAD_Client_ID(),
+				MInvoice.Table_ID, (Integer) mTab.getValue("C_Invoice_ID"), true);
+		if (error != null)
+			FDialog.error(0, null, "PostingError-N", error);
+
+		mTab.dataRefreshAll();
+		mTab.refreshParentTabs();
+
+		return true;
+	}
 }

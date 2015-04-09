@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.adempiere.base.Service;
 import org.adempiere.base.ServiceQuery;
+import org.adempiere.exceptions.AdempiereException;
 import org.adempiere.webui.adwindow.ADWindowContent;
 import org.adempiere.webui.component.ConfirmPanel;
 import org.adempiere.webui.component.Label;
@@ -54,6 +55,7 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 	private Listbox enabledFields = new Listbox();
 	private Div divField = new Div();
 	private Hbox hbField = new Hbox();
+	private WEditor editor = null;
 
 	/**
 	 *
@@ -129,9 +131,15 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 	public void onEvent(Event event) throws Exception {
 		Object source = event.getTarget();
 		if (event.getTarget().equals(confirmPanel.getButton("Ok"))) {
-			if (enabledFields.getItemCount() > 0)
-				update();
+			if (enabledFields.getItemCount() > 0) {
+				GridField mField = (GridField) enabledFields.getSelectedItem().getValue();
+				GridTab mTab = mField.getGridTab();
+				PO po = mTab.getTableModel().getPO(mTab.getCurrentRow());
+				Object newValue = editor.getValue();
+				update(mTab, mField, po, newValue);
+			}
 			onClose();
+
 		} else if (event.getTarget().equals(confirmPanel.getButton("Cancel"))) {
 			onClose();
 		} else if (source == enabledFields) {
@@ -142,13 +150,32 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 
 	private void paintField(GridField field) {
 		divField.appendChild(new Label(field.getHeader()));
-		WEditor editor = WebEditorFactory.getEditor(null, field, false);
+		editor = WebEditorFactory.getEditor(null, field, false);
 		hbField.appendChild(editor.getComponent());
 		editor.addValueChangeListener(this);
 	}
 
-	private void update() {
-		// TODO: Code to call preEdit, updateEdit, postEdit
+	private void update(GridTab mTab, GridField mField, PO po, Object newValue) {
+		// Code to call preEdit, updateEdit, postEdit
+		
+		List<ISpecialEditCallout> callouts = findCallout(mTab.getTableName(), mField.getColumnName());
+		if (callouts != null && !callouts.isEmpty()) {
+			ISpecialEditCallout co = callouts.get(0);
+
+			if (!co.preEdit(mTab, mField, po)) {
+				throw new AdempiereException("error in preEdit : " + co);
+			} else {
+				if (!co.updateEdit(mTab, mField, po, newValue)) {
+					throw new AdempiereException("error in updateEdit : " + co);
+				} else {
+					if (!co.postEdit(mTab, mField, po)) {
+						throw new AdempiereException("error in postEdit : " + co);
+					} else {
+						System.out.println("yiipiiie !!!");
+					}
+				}
+			}
+		}
 	}
 
 	@Override
