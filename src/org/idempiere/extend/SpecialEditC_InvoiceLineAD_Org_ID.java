@@ -26,7 +26,7 @@ import org.idempiere.base.SpecialEditorUtils;
  * @author Nicolas Micoud
  *
  */
-public class SpecialEditC_InvoiceLineC_Charge_ID implements ISpecialEditCallout {
+public class SpecialEditC_InvoiceLineAD_Org_ID implements ISpecialEditCallout {
 
 	@Override
 	public boolean canEdit(GridTab mTab, GridField mField, PO po) {
@@ -56,7 +56,7 @@ public class SpecialEditC_InvoiceLineC_Charge_ID implements ISpecialEditCallout 
 		//		po.saveEx(); it can't be done using PO as you can't save a MInvoiceLine when its parent is processed
 
 		X_C_InvoiceLine il = new X_C_InvoiceLine(Env.getCtx(), mTab.getRecord_ID(), null);
-		il.setC_Charge_ID((Integer) newValue);
+		il.setAD_Org_ID((Integer) newValue);
 		il.saveEx();
 
 		return true;

@@ -143,7 +143,7 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 		} else if (event.getTarget().equals(confirmPanel.getButton("Cancel"))) {
 			onClose();
 		} else if (source == enabledFields) {
-			enabledFields.setEnabled(false);
+//			enabledFields.setEnabled(false); ndNico : why that ? you may have selected the wrong item
 			paintField((GridField) enabledFields.getSelectedItem().getValue());
 		}
 	}
