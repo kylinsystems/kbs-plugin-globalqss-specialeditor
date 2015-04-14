@@ -1,1 +1,1 @@
-[https://idempiere.atlassian.net/browse/IDEMPIERE-1779](https://idempiere.atlassian.net/browse/IDEMPIERE-1779)
+Ref : [https://idempiere.atlassian.net/browse/IDEMPIERE-1779](https://idempiere.atlassian.net/browse/IDEMPIERE-1779)
