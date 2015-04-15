@@ -27,3 +27,4 @@ Import-Package: org.adempiere.base,
  org.zkoss.zul.impl
 Service-Component: OSGI-INF/*.xml
 Bundle-ActivationPolicy: lazy
+Require-Bundle: org.zkoss.zk.library
