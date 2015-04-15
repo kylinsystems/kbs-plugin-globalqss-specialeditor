@@ -36,7 +36,7 @@ public class SpecialEditC_InvoiceLineAD_Org_ID implements ISpecialEditCallout {
 	}
 
 	@Override
-	public String validateEdit(GridTab mTab, GridField mField, PO po) {
+	public String validateEdit(GridTab mTab, GridField mField, PO po, Object newValue) {
 		// TODO Auto-generated method stub
 		System.out.println("validateEdit " + mTab + " - " + mField + " - "+ po);
 		return null;

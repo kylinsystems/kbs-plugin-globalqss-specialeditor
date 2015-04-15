@@ -31,7 +31,7 @@ public class SpecialEditC_OrderC_Project_ID implements ISpecialEditCallout {
 	}
 
 	@Override
-	public String validateEdit(GridTab mTab, GridField mField, PO po) {
+	public String validateEdit(GridTab mTab, GridField mField, PO po, Object newValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}

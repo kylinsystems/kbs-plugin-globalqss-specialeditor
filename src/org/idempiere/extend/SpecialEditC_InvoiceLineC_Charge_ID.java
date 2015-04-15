@@ -30,15 +30,23 @@ public class SpecialEditC_InvoiceLineC_Charge_ID implements ISpecialEditCallout 
 
 	@Override
 	public boolean canEdit(GridTab mTab, GridField mField, PO po) {
-		// TODO Auto-generated method stub
 		System.out.println("canEdit " + mTab + " - " + mField + " - "+ po);
+
+		// The invoice line must not have a product
+		if (mTab.getValue("M_Product_ID") != null)
+			return false;
+
 		return true;
 	}
 
 	@Override
-	public String validateEdit(GridTab mTab, GridField mField, PO po) {
-		// TODO Auto-generated method stub
+	public String validateEdit(GridTab mTab, GridField mField, PO po, Object newValue) {
 		System.out.println("validateEdit " + mTab + " - " + mField + " - "+ po);
+
+		// User must select another charge (as an example, we forbid blank value)
+		if (newValue == null)
+			return "you must select a charge !";
+
 		return null;
 	}
 

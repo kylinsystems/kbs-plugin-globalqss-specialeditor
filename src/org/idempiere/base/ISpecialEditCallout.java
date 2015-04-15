@@ -46,9 +46,10 @@ public interface ISpecialEditCallout
 	 *  @param mTab     Model Tab
 	 *  @param mField   Model Field
 	 *  @param PO       The PO to be modified
+	 *  @param newValue The new value (selected in the special editor)
 	 *  @return String  message or null if successful
 	 */
-	public String validateEdit (GridTab mTab, GridField mField, PO po);
+	public String validateEdit (GridTab mTab, GridField mField, PO po, Object newValue);
 
 	/**
 	 *	Pre Edit
