@@ -56,6 +56,7 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 	private Div divField = new Div();
 	private Hbox hbField = new Hbox();
 	private WEditor editor = null;
+	Hbox hb = new Hbox();
 
 	/**
 	 *
@@ -92,7 +93,6 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 		vb.setWidth("100%");
 		appendChild(vb);
 
-		Hbox hb = new Hbox();
 		Div div = new Div();
 		div.setStyle("float: right");
 		if (enabledFields.getItemCount() == 0) {
@@ -149,9 +149,10 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 	}
 
 	private void paintField(GridField field) {
-		divField.appendChild(new Label(field.getHeader()));
+		if (editor != null)
+			hb.removeChild(editor.getComponent());
 		editor = WebEditorFactory.getEditor(null, field, false);
-		hbField.appendChild(editor.getComponent());
+		hb.appendChild(editor.getComponent());
 		editor.addValueChangeListener(this);
 	}
 
@@ -181,6 +182,7 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 	@Override
 	public void valueChange(ValueChangeEvent evt) {
 		// TODO: Code to call validateEdit
+		
 		confirmPanel.getButton("Ok").setEnabled(true);
 	}
 
