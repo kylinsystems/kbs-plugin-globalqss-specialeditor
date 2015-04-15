@@ -33,6 +33,28 @@
         <AD_Client_ID>0</AD_Client_ID>
         <AD_Org_ID>0</AD_Org_ID>
         <MsgType>I</MsgType>
+        <MsgText>Special Editor</MsgText>
+        <MsgTip/>
+        <EntityType>U</EntityType>
+        <AD_Message_UU>ee47881f-b5c7-45a7-821f-beb6a80d9d35</AD_Message_UU>
+        <Value>org.idempiere.ui.zk.action.specialeditor.label</Value>
+        <IsActive>true</IsActive>
+    </AD_Message>
+    <AD_Message type="table">
+        <AD_Client_ID>0</AD_Client_ID>
+        <AD_Org_ID>0</AD_Org_ID>
+        <MsgType>I</MsgType>
+        <MsgText>There are not fields configured for special edition</MsgText>
+        <MsgTip/>
+        <EntityType>U</EntityType>
+        <AD_Message_UU>169e65b8-0f15-4809-8d5b-cb514072b23e</AD_Message_UU>
+        <Value>NoFieldsForSpecialEdit</Value>
+        <IsActive>true</IsActive>
+    </AD_Message>
+    <AD_Message type="table">
+        <AD_Client_ID>0</AD_Client_ID>
+        <AD_Org_ID>0</AD_Org_ID>
+        <MsgType>I</MsgType>
         <MsgText>Special Edit</MsgText>
         <MsgTip/>
         <EntityType>U</EntityType>
