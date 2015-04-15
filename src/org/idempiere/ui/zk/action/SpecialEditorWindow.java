@@ -33,10 +33,12 @@ import org.compiere.model.PO;
 import org.compiere.util.DisplayType;
 import org.compiere.util.Env;
 import org.compiere.util.Msg;
+import org.compiere.util.Util;
 import org.idempiere.base.ISpecialEditCallout;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Vbox;
@@ -86,6 +88,7 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 		setTitle(Msg.getMsg(Env.getCtx(), "SpecialEdit") + ": " + panel.getActiveGridTab().getName());
 		setWidth("450px");
 		setClosable(true);
+		setSizable(true);
 		setBorder("normal");
 		setStyle("position:absolute");
 
@@ -153,7 +156,9 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 			hb.removeChild(editor.getComponent());
 		editor = WebEditorFactory.getEditor(null, field, false);
 		hb.appendChild(editor.getComponent());
+		editor.setValue(field.getValue());
 		editor.addValueChangeListener(this);
+		confirmPanel.getButton("Ok").setEnabled(false);
 	}
 
 	private void update(GridTab mTab, GridField mField, PO po, Object newValue) {
@@ -181,7 +186,24 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 
 	@Override
 	public void valueChange(ValueChangeEvent evt) {
-		// TODO: Code to call validateEdit
+
+		confirmPanel.getButton("Ok").setEnabled(false);
+		
+		GridField mField = (GridField) enabledFields.getSelectedItem().getValue();
+		GridTab mTab = mField.getGridTab();
+		PO po = mTab.getTableModel().getPO(mTab.getCurrentRow());
+		Object newValue = editor.getValue();
+		
+		List<ISpecialEditCallout> callouts = findCallout(mTab.getTableName(), mField.getColumnName());
+		if (callouts != null && !callouts.isEmpty()) {
+			ISpecialEditCallout co = callouts.get(0);
+			
+			String err = co.validateEdit(mTab, mField, po, newValue);
+			if (!Util.isEmpty(err)) {
+				Clients.showNotification(err, "error", this, "overlap/top_lef", 2000, true);
+				return;
+			}
+		}
 		
 		confirmPanel.getButton("Ok").setEnabled(true);
 	}
