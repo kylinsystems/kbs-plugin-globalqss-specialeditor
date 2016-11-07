@@ -176,8 +176,6 @@ public class SpecialEditorWindow extends Window implements EventListener<Event>,
 				} else {
 					if (!co.postEdit(mTab, mField, po)) {
 						throw new AdempiereException("error in postEdit : " + co);
-					} else {
-						System.out.println("yiipiiie !!!");
 					}
 				}
 			}
