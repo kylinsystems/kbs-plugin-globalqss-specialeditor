@@ -2,11 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Specialeditor
 Bundle-SymbolicName: org.idempiere.ui.zk.specialeditor;singleton:=true
-Bundle-Version: 4.1.0.qualifier
+Bundle-Version: 6.1.0.qualifier
 Bundle-Activator: org.adempiere.plugin.utils.AdempiereActivator
 Export-Package: action.images,
  org.idempiere.base
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.adempiere.base,
  org.adempiere.exceptions,
  org.adempiere.plugin.utils,
@@ -30,3 +29,4 @@ Require-Bundle: zcommon;bundle-version="0.0.0",
  zweb;bundle-version="0.0.0" 
 Service-Component: OSGI-INF/*.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.idempiere.ui.zk.specialeditor
