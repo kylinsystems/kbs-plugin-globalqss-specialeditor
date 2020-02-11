@@ -1,3 +1,14 @@
-Ref : [https://idempiere.atlassian.net/browse/IDEMPIERE-1779](https://idempiere.atlassian.net/browse/IDEMPIERE-1779)
+# KBS Plugin : JPIERE Delete Client and Initial Client
 
-It's the core plugin which need to be used by your own (eg [https://bitbucket.org/nmicoud/org.idempiere.ui.zk.specialeditor_examples](https://bitbucket.org/nmicoud/org.idempiere.ui.zk.specialeditor_examples))
+The fork from https://github.com/globalqss/org.idempiere.ui.zk.specialeditor, and converted to be installed via **KBS ObjectData Tool** 
+
+Refer to https://wiki.idempiere.org/en/Plugin:_SpecialEditor
+
+## How to install
+
+1. Install **KBS ObjectData Tool** (refer to http://wiki.idempiere.org/en/Plugin:_ObjectDataTool)
+
+2. Install the plugin via Apache Felix Web Console
+
+## How to use
+

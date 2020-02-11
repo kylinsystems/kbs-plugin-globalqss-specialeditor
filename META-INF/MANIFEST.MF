@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Specialeditor
-Bundle-SymbolicName: org.idempiere.ui.zk.specialeditor;singleton:=true
+Bundle-Name:  KBS Plugins : Globalqss Specialeditor
+Bundle-SymbolicName: com.kylinsystems.kbs.plugins.globalqss.specialeditor;singleton:=true
 Bundle-Version: 7.1.0.qualifier
-Bundle-Activator: org.adempiere.plugin.utils.AdempiereActivator
+Bundle-Activator: com.kylinsystems.kbs.odt.ODT2PackActivator
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version>=11))"
 Export-Package: action.images,
@@ -28,7 +28,8 @@ Require-Bundle: zcommon;bundle-version="0.0.0",
  zkbind;bundle-version="0.0.0",
  zkplus;bundle-version="0.0.0",
  zul;bundle-version="0.0.0",
- zweb;bundle-version="0.0.0" 
+ zweb;bundle-version="0.0.0",
+ com.kylinsystems.kbs.odt;bundle-version="0.0.0"
 Service-Component: OSGI-INF/*.xml
 Bundle-ActivationPolicy: lazy
-Automatic-Module-Name: org.idempiere.ui.zk.specialeditor
+Automatic-Module-Name: com.kylinsystems.kbs.plugins.globalqss.specialeditor
