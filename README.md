@@ -1,4 +1,4 @@
-# KBS Plugin : JPIERE Delete Client and Initial Client
+# KBS Plugin : Globalqss Special Editor
 
 The fork from https://github.com/globalqss/org.idempiere.ui.zk.specialeditor, and converted to be installed via **KBS ObjectData Tool** 
 
